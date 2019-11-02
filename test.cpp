@@ -6,4 +6,4 @@ From local5
 one
 2
 three
-four
+4
