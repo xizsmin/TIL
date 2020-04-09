@@ -1,0 +1,6 @@
+inline void force_write_cr0(unsigned long val)
+{ unsigned long fo; asm volatile("mov %0,%%cr0" : "+r"(val), "+m"(__fo)); }
+
+inline unsigned long disable_wp(void) { force_write_cr0(read_cr0() & ~0x00010000); }
+void restore_wp(void) { force_write_cr0(read_cr0()); }
+works on 5.x?
