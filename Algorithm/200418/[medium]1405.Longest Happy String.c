@@ -1,5 +1,9 @@
 // TBD: Time exceed-
 // Pruning - just greedily try the longest choice as possible
+//
+// The next step can be determined
+// to compare the priority of a, b, c under given condition.
+// i.e., no need to go through all cases.
 
 #include <stdio.h>
 #include <stdlib.h>
