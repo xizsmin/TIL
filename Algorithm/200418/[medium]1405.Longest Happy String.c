@@ -1,153 +1,112 @@
-// TBD: Time exceed-
-// Pruning - just greedily try the longest choice as possible
-//
-// The next step can be determined
-// to compare the priority of a, b, c under given condition.
-// i.e., no need to go through all cases.
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-int cnt=0;
+#define swap(x, y, t)		((t)=(x),(x)=(y),(y)=(t))
 
-int endswith(const char *str, const char *suffix)
+
+char str[301] = {'\0',};
+int a, b, c;
+
+struct count {
+	char letter;
+	int cnt;
+} typedef COUNT;
+
+COUNT cntarr[3];
+
+void sort_cntarr()
 {
-	int str_len = strlen(str);
-	int suffix_len = strlen(suffix);
+	COUNT tmp;
+	for(int i=0; i<3; ++i) {
+		for (int j=i+1; j<3; ++j) {
+			if (cntarr[i].cnt < cntarr[j].cnt)
+				swap(cntarr[i], cntarr[j], tmp);
+		}
+	}
 
-	if (suffix_len > str_len) return 0;
-	if(0== strncmp(str+(str_len-suffix_len), suffix, suffix_len))
-		return 1;
-	return 0;
+//	for (int i=0; i<3; ++i) \
+		printf("%c %d\n", cntarr[i].letter, cntarr[i].cnt);
 }
 
-
-#define MAX(x, y)			( (x) > (y) ? (x) : (y) )
-int max_len = 0;
-char ans[301];
-
-int get_largest(int x, int y, int z)
+int endswith(char c, int repeat)
 {
-	int ret = x;
-	if (ret < y) ret = y;
-	if (ret < z) ret = z;
-	return ret;
+	int len = strlen(str);
+	if (len < repeat) return 0;
+	for (int i=0; i<repeat; ++i) \
+		if (str[len-i-1] != c) return 0;
+	return 1;
 }
 
-void f(int a, int b, int c, char *ret)
+int state[3];
+
+void f()
 {
-	if (a == 0 && b == 0 && c == 0) {
-		//printf("%s\n", ret);
-		if (strlen(ans) < strlen(ret)) {
-		//	ans = ret;
-			memcpy(ans, ret, strlen(ret));
+	while (1) {
+		sort_cntarr();
+		int changed = 0;
+		for (int i=0; i<3; ++i) if (state[i] != cntarr[i].cnt) changed = 1;
+		if (!changed) return;
+		for(int i=0; i<3; ++i) state[i] = cntarr[i].cnt;
 
-			max_len = strlen(ret);
-			ans[max_len] = '\0';
-		}
-		memset(ret, '\0', sizeof(ret));
-		++cnt;
+//		printf("[%c]%d, [%c]%d, [%c]%d\n", cntarr[0].letter, cntarr[0].cnt, cntarr[1].letter, cntarr[1].cnt, cntarr[2].letter, cntarr[2].cnt);
+		if (cntarr[0].cnt == 0) return;
+		for(int i=0; i<3; ++i) {
+			if (cntarr[i].cnt == 0) continue;
+			if (endswith(cntarr[i].letter, 2)) continue;
 
-		return;
-	}
-	int len = strlen(ret);
+			int len = strlen(str);
+			if (endswith(cntarr[i].letter, 1)) {
+				//printf("(1)\n");
+				str[len]=cntarr[i].letter;
+				cntarr[i].cnt--;
+				break;
+			}
+			else {
+				if (cntarr[i].cnt >= 2)
+				{
+					//printf("(2)\n");
+					str[len] = cntarr[i].letter;
+					str[len+1] = cntarr[i].letter;
+					cntarr[i].cnt--;
+					cntarr[i].cnt--;
+					break;
+				} else { 
+					//printf("(3)\n");
+					str[len] = cntarr[i].letter; cntarr[i].cnt--; 
+					break;
+				}
+			}
 
-	if (max_len < strlen(ret)) {
-		max_len = strlen(ret);
-		memcpy(ans, ret, strlen(ret));
-		ans[max_len] = '\0';
-	}
+		} //printf("%s\n-------------------------------\n", str);
 
-	char *p = ret;
-	p += (len);
-
-
-	int l = get_largest(a, b, c);
-	if (a>0) {
-		if (!endswith(ret, "aa")) {
-			f(a-1, b, c, strcat(ret, "a"));//, lev+1);
-			*p = '\0';
-		}
-	}
-
-	if (b>0) {
-		if (!endswith(ret, "bb")){
-			f(a, b-1, c, strcat(ret, "b"));//, lev+1); 
-			*p = '\0';
-		}
-	}
-
-	if (c>0){
-		if (!endswith(ret, "cc")) {
-			f(a, b, c-1, strcat(ret, "c"));//, lev+1);
-			*p = '\0';
-		}
 	}
 
-/*	
-	if (a>0) {
-		if (!endswith(ret, "aa")) {
-			f(a-1, b, c, strcat(ret, "a"));//, lev+1);
-			*p = '\0';
-		}
-	}
-
-	if (b>0) {
-		if (!endswith(ret, "bb")){
-			f(a, b-1, c, strcat(ret, "b"));//, lev+1); 
-			*p = '\0';
-		}
-	}
-
-	if (c>0){
-		if (!endswith(ret, "cc")) {
-			f(a, b, c-1, strcat(ret, "c"));//, lev+1);
-			*p = '\0';
-		}
-	}*/
 }
 
-
-
-char *longestDiverseString(int a, int b, int c)
+char *wrapper()
 {
-	char ret1[101];
-	char ret2[101];
-	char ret3[101];
-	max_len = 0;
+	cntarr[0].letter='a'; cntarr[0].cnt = a;
+	cntarr[1].letter='b'; cntarr[1].cnt = b;
+	cntarr[2].letter='c'; cntarr[2].cnt = c;
 
-
-	memset(ret1, '\0', sizeof(ret1));
-	memset(ret2, '\0', sizeof(ret2));
-	memset(ret3, '\0', sizeof(ret3));
-	memset(ans, '\0', sizeof(ans)); 
-
-	ret1[0] = 'a', ret2[0] = 'b', ret3[0] = 'c';
-	if (a > 0) f(a-1, b, c, ret1);
-	if (b > 0) f(a, b-1, c, ret2);
-	if (c > 0) f(a, b, c-1, ret3);
-
-	return ans;
+	f();
+	return str;
 }
 
 int main(void)
 {
 	int N;
-	int a, b, c;
-
 	scanf("%d", &N);
 	for(int n=0; n<N; ++n) {
-		scanf("%d", &a);
-		scanf("%d", &b);
-		scanf("%d", &c);
+		memset(str, '\0', sizeof(str));
 
+		scanf("%d", &a); scanf("%d", &b); scanf("%d", &c); 
 
-		printf("%d %d %d\n", a, b, c);
-		printf("%s\n", longestDiverseString(a,b,c));
+		//sort_cntarr();
+		printf("%s\n", wrapper());
 
 	}
 
-//	printf("%s\n", longestDiverseString(7,1,0));
 	return 0;
 }
