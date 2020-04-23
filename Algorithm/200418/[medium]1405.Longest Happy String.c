@@ -1,3 +1,7 @@
+// wrong algorithm
+// counter-example: 4 15 7 -> must be length of 26
+
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
