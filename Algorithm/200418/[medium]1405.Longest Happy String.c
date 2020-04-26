@@ -2,6 +2,8 @@
 // counter-example: 4 15 7 -> must be length of 26
 
 
+// choose min(2, (largest - second-largest))
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
