@@ -6,6 +6,8 @@
 
 #define TEXT_LEN		12
 
+// May open multiple devices at once
+// May access to a single device with multiple sockets
 int main(void)
 {
 	static char buff[256];
