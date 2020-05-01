@@ -1,3 +1,6 @@
+// simple example for creating and registering a character device driver
+// defining basic fops for reading/writing to the device
+
 #include <linux/init.h>
 #include <linux/module.h>
 #include <linux/types.h>
