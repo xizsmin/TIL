@@ -4,6 +4,7 @@
 - 모든 네트워크 계층에서의 헤더, 페이로드, 작업 배분을 위한 정보 등을 저장
 - 데이터 송/수신 헤더정보 포함
 - 네트워크 계층을 거치며(L2 - L3 - L4) 변수값 변경
+- 헤더 붙이고 뗄 때에는 포인터만 옮기는 식으로 구현
   
 ## Networking Options
 - 방화벽, 멀티캐스팅 사용여부 등 상황에 따라 옵션(필드) 유무 결정 -> #ifdef
@@ -27,6 +28,8 @@ struct sk_buff {
 ## Layout Field
 - doublely-linked list
 ```c
+// kernel v5.7-rc4
+
 struct sk_buff {
 	union {
 		struct {
@@ -48,8 +51,41 @@ struct sk_buff {
 		
 		union {
 			struct sock		*sk;		// sockets we're owned by
-			int			ip_defrag_offset;
+			int				ip_defrag_offset;
 		};
+		union {
+			ktime_t		tstamp;			// time we arrived/left
+		...
+		
+		/*
+		 * This is the control buffer. It is free to use for every
+		 * layer. Please put your private variables there. If you
+	 	 * want to keep them across layers you have to do a skb_clone()
+	 	 * first. This is owned by whoever has the skb queued ATM.
+	 	 */
+		char			cb[48] __aligned(8);		// storing ctrl info for each network layer
+		
+		union {
+			struct {
+				unsigned long	_skb_refdst;						// used in routing subsystem(CH7)
+				void		(*destructor)(struct sk_buff *skb);		// destructor
+			};
+		...
+		
+		__be16			protocol;
+		__u16			transport_header;			// L4 header
+		__u16			network_header;				// L3 header
+		__u16			mac_header;					// L2 header
+
+		/* private: */
+		__u32			headers_end[0];
+		
+		unsigned int		len,			// length of actual data(main buff + frag.buf)
+							data_len;		// data length(for each fragment)
+		__u16				mac_len,		// length of MAC header
+		...
+		unsigned int		truesize;		// buffer size in total(including sk_buff itself)
+		refcount_t			users;			// user count(ref, obj, etc.) - see {datagram, tcp}.c
 	};
   ...
 ```
