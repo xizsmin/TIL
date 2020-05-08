@@ -1,5 +1,7 @@
 # struct sk_buff (include/linux/skbuff.h>
 ## Overview
+- 패킷의 정보를 저장
+- 모든 네트워크 계층에서의 헤더, 페이로드, 작업 배분을 위한 정보 등을 저장
 - 데이터 송/수신 헤더정보 포함
 - 네트워크 계층을 거치며(L2 - L3 - L4) 변수값 변경
   
@@ -26,9 +28,29 @@ struct sk_buff {
 - doublely-linked list
 ```c
 struct sk_buff {
-	/* These two members must be first. */
-	struct sk_buff		*next;
-	struct sk_buff		*prev;
+	union {
+		struct {
+			/* These two members must be first. */
+			struct sk_buff		*next;		// next buffer in list
+			struct sk_buff		*prev;		// previous buffer in list
+
+			union {
+				struct net_device	*dev;	// device we arrived on/are leaving by
+				/* Some protocols might use this space to store information,
+				 * while device pointer would be NULL.
+				 * UDP receive path is one user.
+				 */
+				unsigned long		dev_scratch;
+			};
+		};
+		struct rb_node		rbnode; /* used in netem, ip4 defrag, and tcp stack */
+		struct list_head	list;		// queue head
+		
+		union {
+			struct sock		*sk;		// sockets we're owned by
+			int			ip_defrag_offset;
+		};
+	};
   ...
 ```
 - list head
