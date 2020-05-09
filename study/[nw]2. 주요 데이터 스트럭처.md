@@ -80,12 +80,46 @@ struct sk_buff {
 		/* private: */
 		__u32			headers_end[0];
 		
-		unsigned int		len,			// length of actual data(main buff + frag.buf)
-							data_len;		// data length(for each fragment)
-		__u16				mac_len,		// length of MAC header
+		unsigned int	len,			// length of actual data(main buff + frag.buf)
+						data_len;		// data length(for each fragment)
+		__u16			mac_len,		// length of MAC header
 		...
-		unsigned int		truesize;		// buffer size in total(including sk_buff itself)
-		refcount_t			users;			// user count(ref, obj, etc.) - see {datagram, tcp}.c
+		
+		__u8			cloned:1,		// Head may be cloned (check refcnt to be sure)
+		
+		
+		// Defined in /linux/if_packet.h
+		// to set pkt_type value
+		//#define PACKET_HOST		0		/* To us		*/
+		//#define PACKET_BROADCAST	1		/* To all		*/
+		//#define PACKET_MULTICAST	2		/* To group		*/
+		//#define PACKET_OTHERHOST	3		/* To someone else 	*/
+		//#define PACKET_OUTGOING		4		/* Outgoing of any type */
+		//#define PACKET_LOOPBACK		5		/* MC/BRD frame looped back */
+		//#define PACKET_USER		6		/* To user space	*/
+		//#define PACKET_KERNEL		7		/* To kernel space	*/
+		/* Unused, PACKET_FASTROUTE and PACKET_LOOPBACK are invisible to user space */
+		//#define PACKET_FASTROUTE	6		/* Fastrouted frame	*/
+		__u8			pkt_type:3;		// 
+		__u8			ignore_df:1;
+		__u8			nf_trace:1;
+		__u8			ip_summed:2;
+		...
+		
+		union {
+			__wsum		csum;			//checksum
+			struct {
+				__u16	csum_start;
+				__u16	csum_offset;
+			};
+		};
+		__u32			priority;		// QoS - packet queing  priority
+										// can be determined by, for example, the TOS field setting in the IPV4 header.
+		...
+		// cf. /linux/if_ether.h
+		__be16			protocol;		// (unsigned short) must be initialized before netif_rx called
+		unsigned int	truesize;		// buffer size in total(including sk_buff itself)
+		refcount_t		users;			// user count(ref, obj, etc.) - see {datagram, tcp}.c
 	};
   ...
 ```
@@ -97,7 +131,7 @@ struct sk_buff_head {
 	struct sk_buff	*prev;
 
 	__u32		qlen;         // number of list members
-	spinlock_t	lock;     // locking
+	spinlock_t	lock;    	  // locking
 };
 ```
 
