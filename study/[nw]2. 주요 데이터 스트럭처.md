@@ -16,9 +16,6 @@ struct sk_buff {
 ...
 #ifdef CONFIG_NET_SCHED
 	__u16			tc_index;	/* traffic control index */
-#ifdef CONFIG_NET_CLS_ACT
-	__u16			tc_verd;	/* traffic control verdict */
-#endif
 #endif
 ```
 - 커널 컴파일시 make config 단계에서 CONFIG_NET_SCHED / CONFIG_NET_CLS_ACT 옵션 체크해야 코드 타게 됨
@@ -133,6 +130,52 @@ struct sk_buff_head {
 	__u32		qlen;         // number of list members
 	spinlock_t	lock;    	  // locking
 };
+```
+
+- 관리 함수
+```c
+// Add data to a buffer
+// A pointer to the first byte of the extra data is returned.
+void *skb_put(struct sk_buff *skb, unsigned int len)
+{
+	void *tmp = skb_tail_pointer(skb);
+	SKB_LINEAR_ASSERT(skb);
+	skb->tail += len;
+	skb->len  += len;
+	if (unlikely(skb->tail > skb->end))
+		skb_over_panic(skb, len, __builtin_return_address(0));
+	return tmp;
+}
+EXPORT_SYMBOL(skb_put);
+
+// Add data to the start of a buffer
+// A pointer to the first byte of the extra data is returned.
+void *skb_push(struct sk_buff *skb, unsigned int len)
+{
+	skb->data -= len;
+	skb->len  += len;
+	if (unlikely(skb->data < skb->head))
+		skb_under_panic(skb, len, __builtin_return_address(0));
+	return skb->data;
+}
+EXPORT_SYMBOL(skb_push);
+
+// remove data from the start of a buffer
+// A pointer to the next data in the buffer is returned
+void *skb_pull(struct sk_buff *skb, unsigned int len)
+{
+	return skb_pull_inline(skb, len);
+}
+EXPORT_SYMBOL(skb_pull);
+
+// Increase the headrom of an empty &sk_buff by reducing the tailroom
+// Only allowed for an empty buffer
+static inline void skb_reserve(struct sk_buff *skb, int len)
+{
+	skb->data += len;
+	skb->tail += len;
+}
+
 ```
 
 # struct net_device
