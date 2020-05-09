@@ -132,7 +132,7 @@ struct sk_buff_head {
 };
 ```
 
-- 관리 함수
+## 관리 함수
 ```c
 // Add data to a buffer
 // A pointer to the first byte of the extra data is returned.
@@ -177,5 +177,9 @@ static inline void skb_reserve(struct sk_buff *skb, int len)
 }
 
 ```
+
+## 메모리 할당 관련 함수
+- alloc_skb, dev_alloc_skb, kfree_skb, dev_kfree_skb
+
 
 # struct net_device
