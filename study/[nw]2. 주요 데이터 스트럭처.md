@@ -168,6 +168,39 @@ void *skb_pull(struct sk_buff *skb, unsigned int len)
 }
 EXPORT_SYMBOL(skb_pull);
 
+static inline void *__skb_pull(struct sk_buff *skb, unsigned int len)
+{
+	skb->len -= len;
+	BUG_ON(skb->len < skb->data_len);
+	return skb->data += len;
+}
+
+static inline void *skb_pull_inline(struct sk_buff *skb, unsigned int len)
+{
+	return unlikely(len > skb->len) ? NULL : __skb_pull(skb, len);
+}
+
+// remove end from a buffer
+void skb_trim(struct sk_buff *skb, unsigned int len)
+{
+	if (skb->len > len)
+		__skb_trim(skb, len);
+}
+EXPORT_SYMBOL(skb_trim);
+
+static inline void __skb_set_length(struct sk_buff *skb, unsigned int len)
+{
+	if (WARN_ON(skb_is_nonlinear(skb)))
+		return;
+	skb->len = len;
+	skb_set_tail_pointer(skb, len);
+}
+
+static inline void __skb_trim(struct sk_buff *skb, unsigned int len)
+{
+	__skb_set_length(skb, len);
+}
+
 // Increase the headrom of an empty &sk_buff by reducing the tailroom
 // Only allowed for an empty buffer
 static inline void skb_reserve(struct sk_buff *skb, int len)
