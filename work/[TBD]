@@ -6,3 +6,6 @@ TBD-connect to ioctl
 vfs_getattr -> fstat
 path_openat -> read, open
 preroute?
+
+net_device
+elf analysis
