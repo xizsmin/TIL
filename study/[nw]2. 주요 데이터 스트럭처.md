@@ -214,5 +214,15 @@ static inline void skb_reserve(struct sk_buff *skb, int len)
 ## 메모리 할당 관련 함수
 - alloc_skb, dev_alloc_skb, kfree_skb, dev_kfree_skb
 
+## 데이터 예약 및 정렬
+- skb_reserve, skb_put, skb_push, skb_pull
+
+## 버퍼의 복제와 복사
+- skb_clone
+
+## 리스트 관리 함수
+- skb_queue_head_init, skb_queue_head, skb_queue_tail
+- skb_dequeue, skb_dequeue_tail, skb_queue_purge, skb_queue_walk
+
 
 # struct net_device
