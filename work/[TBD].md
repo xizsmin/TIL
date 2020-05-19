@@ -7,5 +7,6 @@ vfs_getattr -> fstat
 path_openat -> read, open
 preroute?
 
-net_device
+~~net_device~~
+seq_file
 elf analysis
