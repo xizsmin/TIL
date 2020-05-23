@@ -1,4 +1,7 @@
-
+/**
+* simple DFS
+* with generic tree structure
+*/
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -34,8 +37,8 @@ void g(int *manager, int *informTime, struct node *cur, int cost)
 	}
 }
 
-
-int numOfMinutes(int n, int headID, int* manager, int managerSize, int* informTime, int informTimeSize){ 
+int numOfMinutes(int n, int headID, int* manager, int managerSize, int* informTime, int informTimeSize)
+{ 
     N = n;
     ans = 0;
     memset(visited, 0, sizeof(visited));
@@ -54,3 +57,6 @@ int numOfMinutes(int n, int headID, int* manager, int managerSize, int* informTi
     free(nodes);
     return ans;
 }
+
+
+
