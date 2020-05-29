@@ -17,7 +17,14 @@
                           
 ```
 
-+ `NF_HOOK` macro: Called in some points along the packet traversal(actually in all the functions above)
+### `NF_HOOK` macro
+- Called in some points along the packet traversal
+- (Actually in all the functions above, plus whenever needed)
+  - pf: Protocol family(defined in /include/linux/netfilter.h e.g., NFPROTO_IPV4, NFPROTO_ARP, etc.)
+  - hook: One of the five netfilter hooks above
+  - skb: sk_buff (net, sk: TBD)
+  - in, out: incoming/outgoing interfaces(net device)
+ 
 ```c
 
 static inline int
