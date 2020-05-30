@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 
 #define N_MAX			2000
 #define M_MAX			2000
@@ -12,9 +13,16 @@ int N, M;
 int ans = 20000;
 int F;
 
-int check_arr1_inc(int base, int offset)
+int compare(const void *first, const void *second)
 {
-	for(int i=base; i<base+offset; ++i) {
+	if(*(int *)first > *(int *)second) return 1;
+	else if(*(int *)first < *(int *)second) return -1;
+	else return 0;
+}
+
+int check_arr1_inc(int start, int end)
+{
+	for(int i=start; i<=end; ++i) {
 		if (arr1[i] <= arr1[i-1]) return 0;
 	}
 	return 1;
@@ -22,39 +30,78 @@ int check_arr1_inc(int base, int offset)
 
 void f(int i, int j, int prev, int cnt, int lev)
 {
-	if (i == F) {
-		if (M == F) ans = MIN(ans, cnt);
-		else if (N == F) {
-			/* check if the rest of arr1[] gets strictly increasing */
+	if (N > M) {
+		if (j > M) {
+			if(check_arr1_inc(i, N-1)) {
+				for(int l=0; l<lev; ++l) printf(" ");
+				printf("<%d> ", prev);
+				for(int l=i; l<N; ++l) printf("<%d> ", arr1[l]);
+				printf("\n");
+				for(int l=0; l<lev; ++l) printf(" ");
+				printf("[%d]count: %d\n", lev,cnt);
+			}
+			printf("[%d]count: %d\n", lev,cnt);
+			ans = MIN(ans, cnt);
 			return;
 		}
-		return;
-	}
-	for(int l=0; l<lev; ++l) printf(" ");
-	printf("%d\n", prev);
-
-	if (/*arr1[i-1]*/prev < arr2[j]) {
-		if (arr1[i] == arr2[j]) f(i+1, j+1, arr1[i], cnt, lev+1);
-		else {
-			f(i+1, j+1, arr2[j], cnt+1, lev+1);
-			f(i+1, j+1, arr1[i], cnt, lev+1);
+		if (i > N) {
+			for(int l=0; l<lev; ++l) printf(" ");
+			printf("[%d]count: %d\n", lev, cnt);
+			ans = MIN(ans, cnt);
+			return;
 		}
 	}
-	else {
+
+//	for(int l=0; l<lev; ++l) printf(" ");
+//	printf("[%d]f(%d, %d)->%d(%d)\n", lev, i, j, prev, cnt);
+
+	if (/*arr1[i-1]*/prev < arr2[j]) {
+		if (arr1[i] == arr2[j]) {
+			for(int l=0; l<lev; ++l) printf(" ");
+			printf("(a)%d->%d\n", prev, arr1[i]);
+			f(i+1, j+1, arr1[i], cnt, lev+1);
+		}
+		else {
+			for(int l=0; l<lev; ++l) printf(" ");
+			printf("(b)%d->%d\n", prev, arr2[j]);
+			f(i+1, j+1, arr2[j], cnt+1, lev+1);
+
+			if(prev < arr1[i]) {
+				for(int l=0; l<lev; ++l) printf(" ");
+				printf("(c)%d->%d\n", prev, arr1[i]);
+				f(i+1, j, arr1[i], cnt, lev+1);
+			}
+		}
+	}
+	else if (prev<arr1[i]){
+		for(int l=0; l<lev; ++l) printf(" ");
+		printf("(d)%d->%d\n", prev, arr1[i]);
 		f(i+1, j+1, arr1[i], cnt, lev+1);
 	}
+	else {
+		if (lev == MAX(N, M)) {
+			printf("COUNT:%d\n", cnt);
+			ans = MIN(ans, cnt);
+			return;
+		}
+	}
 }
+
 
 int main(int argc, char **argv)
 {
 	scanf("%d", &N);
 	scanf("%d", &M);
-	K = MIN(N, M);
+	F = MIN(N, M);
 	for(int n=0; n<N; ++n) scanf("%d", arr1+n);
 	for(int m=0; m<M; ++m) scanf("%d", arr2+m);
+	qsort(arr2, M, sizeof(int), compare);
+	for(int m=0; m<M; ++m) printf("%d", arr2[m]);
+	printf("\n");
 
 
 	f(0, 0, 0, 0, 0);
+	printf("ans: %d\n", ans);
 
 	return 0;
 }
