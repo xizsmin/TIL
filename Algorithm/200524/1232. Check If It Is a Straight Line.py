@@ -16,6 +16,14 @@ class Solution:
                 if coord[0] != coordinates[1][0]:
                     return False
             return True
+            # 1.
+            # def func(coord):
+            #    return coord[0] == coordinates[1][0]
+            # return len(list(filter(func, coordinates)))==len(coordinates)
+            # 2.
+            # return len([x for x in coordinates if x[0]==coordinates[1][0]])==len(coordinates)
+            # 3.
+            # return len(list(filter(lambda coord: coord[0]==coordinates[1][0], coordinates)))==len(coordinates)
         else:
             slope = (coordinates[1][1] - coordinates[0][1])/(coordinates[1][0] - coordinates[0][0])
             const = coordinates[0][1] - slope*coordinates[0][0]
