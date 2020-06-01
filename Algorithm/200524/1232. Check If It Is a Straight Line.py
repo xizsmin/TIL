@@ -5,6 +5,8 @@ Consider first two given coordinates (x1, y1) and (x2, y2):
 2) else: f(x) = mx + a
    where m = (y2-y1)/(x2-x1), a = y1-m*x1
    
+   
+TBD: Python filter?
 '''
 class Solution:
         
