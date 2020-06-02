@@ -86,7 +86,57 @@ void f(int i, int j, int prev, int cnt, int lev)
 		}
 	}
 }
+int __f(int i, int j, int prev, int cnt, int lev)
+{
 
+	if (i == N) {
+//		ans = MIN(ans, cnt);
+		return 1;
+	} else if (j == M){
+		if (i< N && arr1[i] <= prev) {
+			return N_MAX;
+		}
+		for(int k=i+1; k<N; ++k) {
+			if (arr1[k] <= arr1[k-1]) {
+				return N_MAX;
+			}
+		}
+		//ans = MIN(ans, cnt);
+		return 1;
+	}
+
+
+
+	for(int l=0; l<lev; ++l) printf(" ");
+	printf("[%d] %d(%d)\n", lev, prev, cnt);
+	int &ret = dp[i][j];
+	for(int l=0; l<lev; ++l) printf(" ");
+	printf("dp[%d][%d] = %d\n", i, j, ret);
+
+	if (ret<2000) return ret;
+
+	ret =2000;
+	int tmp = 0;
+	int tmp1 = 0;
+	int tmp2 = 0;
+	if (prev < arr2[j]) {
+		tmp += __f(i+1, j+1, arr2[j], cnt+1, lev+1);
+//		if (tmp < 2000) ret = tmp;
+		ret = MIN(ret, tmp);
+	}
+
+	if (prev < arr1[i]) {
+		tmp1 += __f(i+1, j, arr1[i], cnt, lev+1);
+		tmp2 += __f(i+1, j+1, arr1[i], cnt, lev+1);
+		tmp = MIN(tmp1, tmp2);
+		ret = MIN(ret, tmp);
+	}
+
+	int tmp3 = 0;
+	tmp3 += __f(i, j+1, prev, cnt, lev+1);
+	ret = MIN(ret, tmp3);
+	return ret;
+}
 
 int main(int argc, char **argv)
 {
