@@ -40,3 +40,7 @@ NF_HOOK(uint8_t pf, unsigned int hook, struct net *net, struct sock *sk, struct 
 }
 
 ```
+
+### Connection Tracking
+- Allows the kernel to keep track of sessions
+- Works as basis of NAT
