@@ -8,12 +8,22 @@
 - 함수선언:
   - return 따로 안쓰고 수식처럼(flow 마지막에 있는 게 리턴)
   - 나머지는 문법문제..
+  - return할 게 없으면 Unit type(~= void)
 ```scala
 def f(x: Int, y: Int) : Int = {
   if (x < y) x
   else y
 }
 ```
+
+- 함수든 변수든 그냥 객체
+```scala
+val f = (x:Int, y:Int) => if (x > y) x else y   // 단순 대입
+
+// 함수(객체)의 타입을 명시적으로 지정하면
+val f2: (Int, Int) => Int = (x: Int, y: Int) => if (x > y) x else y
+```
+
 
 
  
