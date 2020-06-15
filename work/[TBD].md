@@ -14,5 +14,5 @@ path_openat -> read, open~~
 ### scala study?
 
 
-# grafana tcpdump
-# DjangoModelPermissions
+### grafana tcpdump
+### DjangoModelPermissions
