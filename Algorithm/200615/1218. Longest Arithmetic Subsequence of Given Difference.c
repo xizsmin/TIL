@@ -1,4 +1,6 @@
  
+// N-square already: need to change the algorithm
+
 #define N_MAX			100000
 #define MAX(x, y)		( (x) > (y) ? (x) : (y) )
 
