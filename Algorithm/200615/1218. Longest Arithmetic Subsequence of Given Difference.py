@@ -1,33 +1,19 @@
 class Solution:
-    
-    def __init__(self):
-        self.dp={}
-        self.visited=[]
-
-    def f(self, _list, _visited, item, diff):
-        if _list is None:
-            return 0
-        if item in self.dp:
-            return self.dp[item]
-        ret = 1
-        
-        for x in _list: 
-            if (x in _visited) :
-                continue
-            if (x - item == diff) :
-                _visited.append(x)
-                ret = max(ret, self.f(_list, _visited, x, diff)+1)
-
-        self.dp[item] = ret
-        return ret 
-    
+      
     def longestSubsequence(self, arr: List[int], difference: int) -> int:
+        loc_dict = { arr[i]:[] for i in range(len(arr)) }
+        cnt_dict = { k:1 for k in arr }
+        
+        for i in range(len(arr)):
+            loc_dict[arr[i]].append(i)
+            
         ret = 1
-        cnt=1
-        for i in arr:
-            visited = []
-            visited.append(i)
-            tmp_arr = arr[cnt:]
-            ret = max(ret, self.f(tmp_arr, visited, i, difference))
-            cnt = cnt + 1
+        for i in range(len(arr)):
+            if (arr[i] - difference) in loc_dict:
+                if min(loc_dict[arr[i]-difference]) < i:
+                    cnt_dict[arr[i]] = max(cnt_dict[arr[i]], cnt_dict[arr[i]-difference]+1)
+                ret = max(ret, cnt_dict[arr[i]])
+                
         return ret
+    
+    
