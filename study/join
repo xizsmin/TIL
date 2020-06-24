@@ -1,0 +1,8 @@
+tableA : id, name, subject_id
+
+tableB : id, subject
+
+select a.id, a.name, b.subject
+From A a
+     Inner join B b
+     On a.subject_id = b.id
