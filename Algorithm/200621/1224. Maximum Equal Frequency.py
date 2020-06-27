@@ -21,7 +21,7 @@ for i in range(len_nums):
 	if len(cnt_cnts)==2 and 1 in cnt_cnts.values():
 		print('****',index)
 		break
-	print('------------------------')
+
 	
 	
 	
