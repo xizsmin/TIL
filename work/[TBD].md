@@ -16,3 +16,5 @@ path_openat -> read, open~~
 
 ### grafana tcpdump
 ### DjangoModelPermissions
+
+### observe dir remotely
