@@ -28,9 +28,21 @@ def max(x: Int, y: Int): (Int, Int) = if (x > y) (x, y) else (y, x+y)
 ```
 
 - Unit == Void
-```
+```scala
 def greet(): Unit = println("Hello world!")
 ```
 
+- 명령형 vs. 함수형
+  - 명령할 내용을 일일이 지시하는 대신 기능(함수) 단위로
+```scala
+// list 중 10 이상인 x에 대해 2로 나누고 리턴
+def f(list:List[Int]): List[Int] = list.filter(x => x > 10).map(x => x / 2)
 
- 
+def filterFunc(x: Int) = Boolean = x > 10
+def f(list:List[Int]): List[Int] = list.filter(filterFunc).map(x=> x / 2)
+```
+
+- Example) 0 이상의 정수를 이진법으로 나타냈을 때 1의 개수
+```scala
+def g(x: Int): Int = if (x == 0) 0 else if ((x & 1) == 1) 1 + g(x >> 1) else g(x >> 1)
+```
