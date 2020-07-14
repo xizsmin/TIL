@@ -23,10 +23,14 @@ val f = (x:Int, y:Int) => if (x > y) x else y   // 단순 대입
 // 함수(객체)의 타입을 명시적으로 지정하면
 val f2: (Int, Int) => Int = (x: Int, y: Int) => if (x > y) x else y
 
-// 복수 개 리턴
+// 복수 개 리턴(하고 싶으면 튜플 등으로 묶어서)
 def max(x: Int, y: Int): (Int, Int) = if (x > y) (x, y) else (y, x+y)
 ```
 
+- Unit == Void
+```
+def greet(): Unit = println("Hello world!")
+```
 
 
  
