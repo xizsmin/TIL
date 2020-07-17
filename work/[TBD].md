@@ -18,3 +18,5 @@ path_openat -> read, open~~
 ### DjangoModelPermissions
 
 ### observe dir remotely
+
+### django docker cubernetes
