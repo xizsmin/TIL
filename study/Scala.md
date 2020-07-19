@@ -46,3 +46,40 @@ def f(list:List[Int]): List[Int] = list.filter(filterFunc).map(x=> x / 2)
 ```scala
 def g(x: Int): Int = if (x == 0) 0 else if ((x & 1) == 1) 1 + g(x >> 1) else g(x >> 1)
 ```
+
+- 배열
+```scala
+// [] : Type 지정할 때만 사용
+// index는 ()로 접근
+// array는 배열 주소를 저장하는 val -> append 불가
+// 배열 값 각각은 var처럼 취급
+val array = new Array[Int](5)
+array(0) = 3
+array(2) = 2
+
+// 값으로 초기화 가능 (초기화시 사이즈로 고정)
+val names = Array("zero", "one", "two")
+
+```
+
+- 연산자는 없음 -> 다 함수
+  - 1 + 2  <-->  (1).+(2)
+
+- List
+  - index로 접근 불가, 하나씩 순회만 가능
+  - 초기화 이후에는 값 변경 불가
+  - 2개 이상의 List를 cons (:::) 로 이어붙이는 건 가능
+```scala
+val list1 = List(1,2,3)
+val list2 = List(4,5)
+// list2의 ::: 가 호출되어 list1을 앞에 붙임
+val list3 = list1 ::: list2     // 1,2,3,4,5
+// !!!
+val list3_1 = list1.:::(list2)
+// :: -> list의 api
+val list4 = 0 :: list4        // 0,1,2,3,4,5
+
+// Nil : 빈 리스트 ( -> Nil.
+val list5 = 1 :: 2 :: 3 :: Nil
+  
+```scala
