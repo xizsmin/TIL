@@ -101,3 +101,17 @@ println(map1(2))      // II
 println(map1.filter(x => x._2 == "III"))   // HashMap(6->"III", 3->"III")
 ```  
  
+- 예제: 파일 내용 읽어서 오른쪽 정렬로 출력
+``` scala
+def widthOfLength(s: String): Int = s.length.toString().length
+
+def printFileLinesAligned(filename: String): Unit = {
+
+  val lines = Source.fromFile(filename).getLines().toList
+  val longestLinelength = lines.reduceLeft( (a, b) => if ( a.length > b.length ) a else b ).length
+  val newlines = lines.map(x => " " * (longestLinelength - x.length) + x + "\n").mkString
+  println(newlines)
+  
+}
+  
+```
