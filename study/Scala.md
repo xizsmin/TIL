@@ -82,4 +82,22 @@ val list4 = 0 :: list4        // 0,1,2,3,4,5
 // Nil : 빈 리스트 ( -> Nil.
 val list5 = 1 :: 2 :: 3 :: Nil
   
-```scala
+```
+
+- Tuple
+  - 변경 불가능, 원소별로 다른 타입 지정 가능
+``` scala
+  val pair = (99, "aaa")
+  println(pair._1)      // 99
+  println(pair._2)      // aaa
+  
+```
+ 
+- Set: 중복 및 순서 없음
+- Map
+``` scala
+val map1 = Map( 1 -> "I", 2 -> "II", 3 -> "III", 4 -> "IV", 5 -> "V", 6 -> "III")
+println(map1(2))      // II
+println(map1.filter(x => x._2 == "III"))   // HashMap(6->"III", 3->"III")
+```  
+ 
