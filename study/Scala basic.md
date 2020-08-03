@@ -26,3 +26,16 @@ println(
       |""".stripMargin)
 ```
 
+## 문자열 interpolation
+```scala
+val name = "Eric"
+println(s"Hello, $name!")           // Hello, Eric!
+
+println(s"Sum of 1 and 7: ${1+7})   // Sum of 1 and 7: 8
+```
+
+## Operator is Method
+```scala
+val sum = 1 + 2                     // 3
+val sumlikeMethod = 1.+(2)          // 3
+```
