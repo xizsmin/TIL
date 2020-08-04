@@ -2,6 +2,8 @@
 Left leaves 따라가며 합 구하기
 ** Right child도 방문해야 함
 cf. level order -> bfs(queue) 
+
+https://leetcode.com/problems/sum-of-left-leaves/
 '''
 
 
