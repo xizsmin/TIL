@@ -16,60 +16,53 @@ Please refer to the first example for a better explanation.
 Return the minimum total cost of the cuts.
 '''
 
-# TBD: optimization by pruning
-# ....
+'''
+TRICK:
 
-cuts = [1,3,4,5]
-visited = []
-N = 7 
+f(s, e) = min(f(s, i) + f(i, e) + (e-s)) for i:0 -> len(cuts)-1
+* append start and ending point to cuts[] for convenience.
 
-cuts = [5,6,1,4,2]
-N=9
-ans = 1000000
-dp = dict((x, 1000000) for x in range(0, len(cuts)))
-
-print(dp)
-
-def find_my_pos(idx, cutlist):
-    for _clist in cutlist:
-        if idx >= _clist[0] and idx <= _clist[1]:
-            #print('--> return (', _clist[0], ',', _clist[1], ')')
-            return _clist
-
-
-def f(idx, cuts, visited, cutlist, cost, depth):#: int, cuts: List[int], visited: List[int]):
-    for i in range(0, depth):
-	    print(' ', end='')
-    print(cuts[idx], '--->', cost)
-    if len(visited) == len(cuts):
-        print('!! cost:', cost)
-        return cost
-    ret = 1000000
-    for i in range(0, len(cuts)):
-        if (idx != i) and (i not in visited):
-            my_pos = find_my_pos(cuts[i], cutlist)
-            cutlist.remove(my_pos)
-            cutlist.append([my_pos[0], cuts[i]])
-            cutlist.append([cuts[i], my_pos[1]])
-            ret = min(ret, f(i, cuts, visited+[i], cutlist, cost+(my_pos[1]-my_pos[0]), depth+1))
-            cutlist.append(my_pos)
-            cutlist.remove([my_pos[0], cuts[i]])
-            cutlist.remove([cuts[i], my_pos[1]])
-
-            dp[i] = ret
-
-
-    return ret
+e.g.,
+n=7, cuts=[1,3,4,5]:
+f(0, 7) = min(
+		f(0, 1) + f(1, 7),
+		f(0, 3) + f(3, 7),
+		f(0, 4) + f(4, 7),
+		f(0, 5) + f(5, 7)
+		) + 7
+		
 
 '''
-cutlist = [[0,3],[3,N]]
-ans = 1000000
-ans = f(1, cuts, visited+[1], cutlist, N, 0)
-'''
-ans = 1000000
-for i in range(0, len(cuts)):
-    cutlist = [[0, cuts[i]],[cuts[i], N]]
-    ans = min(ans, f(i, cuts, visited+[i], cutlist, N, 0))
-print('ans:', ans)
+
+class Solution:
+    def __init__(self):
+        self.dp = []
+        self.N_MAX = 200		# a rough maximum...
+        self.INT_MAX = 2147483400
     
-    
+    def f(self, s, e, cuts):
+        #print(s, ',',e)
+        if self.dp[s][e] != self.INT_MAX:
+            return self.dp[s][e]
+        if s == e:
+            self.dp[s][e] = 0
+            return 0
+        for i in range(0, len(cuts)):
+            if (cuts[i] < cuts[s] or cuts[i] > cuts[e]):
+                continue
+            if cuts[s] == cuts[i] or cuts[e] == cuts[i]:
+                continue
+            self.dp[s][e] = min(self.dp[s][e], self.f(s, i, cuts)+self.f(i, e, cuts)+(cuts[e]-cuts[s]))
+        return self.dp[s][e]
+        
+    def minCost(self, n: int, cuts: List[int]) -> int:
+        cuts.append(0)
+        cuts.append(n)
+        cuts = sorted(cuts)
+        
+        self.dp = [ [self.INT_MAX for i in range(0, self.N_MAX)] for j in range(0, self.N_MAX)]
+        for i in range(0, len(cuts)-1):
+            self.dp[i][i+1] = 0
+            
+        return self.f(0, len(cuts)-1, cuts)
+
