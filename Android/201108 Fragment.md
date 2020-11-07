@@ -1,11 +1,20 @@
 # Fragment
 ### 의미
 - Activity 내에 생성되는 여러 화면 요소들을 모듈처럼 묶어서 구성하는 단위
+- A set of UI components with its own lifecycle and input event receivers, 
+which can be reused across different UIs (mostly acvitivities) in the app.
 
 ### 특징
 1. 생명 주기, 입력 이벤트 등을 자체적으로 가지며 액티비티 실행 중 동적으로 추가/제거 가능
 2. 액티비티를 분할 - UI 컴포넌트 여러 개를 모듈식으로 구성, 재사용성 높음
 - 태블릿 등 큰 화면에서 역동적이고 유연한 UI를 지원하는 것이 목적이었음
+
+- Basically hosted by its owner Activity.
+- Easily reused, dynamically added / removed.
+- May act like a mini-UI within the Activity.
+- Retains data even after a config change.(e.g., screen orientation.)
+- As it works as a section of UI components, it makes easier to display UI on different screen resolutions.
+
   
 
 ### 기존의 UI 구성방식에 대한 차이점
@@ -14,8 +23,7 @@
 
 ### 생명 주기
 
-- (Fragment added) -> onAttach -> onCreate -> onCreateView -> onActivityCreated -> onStart -> onResume -> (Fragment Activated!)
-                                                    |                                                                 |
-                                                    <------------ onDestroyView <- onStop <- onPause <-----------------
+(Fragment added) | onAttach -> onCreate -> onCreateView -> onActivityCreated -> onStart -> onResume -> (Fragment Activated!)
+(Fragment replaced / removed) | (added to the backstack) -> onPause -> onStop -> onDestroyView -> (returns back to stage onCreateView if )
 
 
