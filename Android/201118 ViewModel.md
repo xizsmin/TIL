@@ -6,3 +6,7 @@ onRestoredInstanceState() (또는 onCreate())에서 전달받은 bundle로부터
 - UI controller는 보여 주는 데에 집중해야 함. heavy한 데이터를 다루는 작업까지 맡으면 구조가 복잡해져서 설계/관리가 어려워진다.
 - => UI와 data model를 분리할 필요성!
 - app이 destroy되거나 screen rotation 발생, 네트워크 연결이 약해지는 등의 이벤트에도 사용자 데이터 유지
+
+
+![1_3Kr2-5HE0TLZ4eqq8UQCkQ](https://user-images.githubusercontent.com/57291261/99828085-d3e82b80-2b9d-11eb-923b-4ea7209ebd25.png)
+
