@@ -35,7 +35,7 @@ dependencies {
   - Default: CPU 연산
   - Main   : Android UI
   * Dispatcher 이용할 job은 `suspend fun` 으로 선언
-  ```kotlin
-  suspend fun fetchSomething () { }
-  ```
+```kotlin
+suspend fun fetchSomething () { }
+```
   
