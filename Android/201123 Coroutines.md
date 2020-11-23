@@ -20,3 +20,22 @@
 
 [OS Thread 구조]
 
+
+## Android에서 Kotlin Coroutine 구현하기
+
+```kotlin
+dependencies {
+  implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:x.x.x"
+  implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:x.x.x"
+}
+```
+### 구성요소
+- Dispatchers: 어느 스레드에서 job이 돌아갈지 결정
+  - IO     : 네트워크, disk 등과 연관된 작업
+  - Default: CPU 연산
+  - Main   : Android UI
+  * Dispatcher 이용할 job은 `suspend fun` 으로 선언
+  ```kotlin
+  suspend fun fetchSomething () { }
+  ```
+  
