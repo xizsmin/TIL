@@ -35,7 +35,25 @@ dependencies {
   - Default: CPU 연산
   - Main   : Android UI
   * Dispatcher 이용할 job은 `suspend fun` 으로 선언
+  
 ```kotlin
 suspend fun fetchSomething () { }
 ```
   
+Example code goes like:
+
+```kotlin
+suspend fun download(): ImgFile {
+    return GlobalScope.async(Dispatchers.IO) {
+        // Download ImgFile
+        // and return
+    }.await()
+}
+
+GlobalScope.launch(Dispatchers.Main) {
+    val imgFile: ImgFile = download()   // Downloads image file on IO thread
+    displayImgFile(imgFile)             // and displays it!
+}
+
+
+```
