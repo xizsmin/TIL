@@ -92,14 +92,14 @@
   - 복원되어 User interaction 시작할 경우엔 `onRestart()`
   - 완전히 종료될 경우는 `onDestroy()`
   
-  ## onRestart()
-  - `stopped` 상태였던 activity가 재시작될 때 상태복원
-  - 끝나면 `onStart()` 불림
+## onRestart()
+- `stopped` 상태였던 activity가 재시작될 때 상태복원
+- 끝나면 `onStart()` 불림
   
-  ## onDestroy()
-  - Activity가 수신하는 마지막 콜백
-  - Activity (또는 activity를 포함하는 프로세스)가 완전히 제거되기 전에 호출
-  - Activity가 갖는 모든 리소스를 해제하도록 구현
+## onDestroy()
+- Activity가 수신하는 마지막 콜백
+- Activity (또는 activity를 포함하는 프로세스)가 완전히 제거되기 전에 호출
+- Activity가 갖는 모든 리소스를 해제하도록 구현
   
 
 
