@@ -55,3 +55,51 @@
     />
     
 ```
+
+
+
+# Activity Life-cycle
+수명주기 전반에 걸쳐 여러 상태를 거치게 되며, 상태 간 전환 처리에 콜백 사용 가능
+
+## onCreate()
+- 시스템이 Activity를 생성할 때 실행
+- Activity 필수 구성요소를 초기화 (뷰 생성 등)
+- **`setContentView()`** 호출, Activity의 UI를 위한 레이아웃 정의
+
+## onStart()
+- Activity *시작* 단계로 전환, 사용자에게 Activity 표시
+- Activity가 Foreground로 나올 준비
+
+## onResume()
+- Activity-User interaction 시작 직전에 호출
+- **Activity stack의 TOP에 위치**, 모든 user input 캡처
+- App의 핵심 기능 대부분을 구현
+
+
+## onPause()  
+### *`onResume()` 다음에만 불림*
+- Activity가 포커스 잃고 일시정지 상태가 됨 (back, recent 버튼 클릭 등)
+- UI update는 가능 (e.g., 내비게이션 지도 화면 등)
+- 다음 단계: (상황에 따라) `onResume()` 또는 `onStop()`
+
+## onStop()
+- 사용자에게 **invisible한 상태**
+  - `destroy` 중
+  - 다른 activity가 시작
+  - 원래 있던 activity가 resume되면서 현재 activity를 덮음
+  
+- 다음 단계: (상황에 따라)
+  - 복원되어 User interaction 시작할 경우엔 `onRestart()`
+  - 완전히 종료될 경우는 `onDestroy()`
+  
+  ## onRestart()
+  - `stopped` 상태였던 activity가 재시작될 때 상태복원
+  - 끝나면 `onStart()` 불림
+  
+  ## onDestroy()
+  - Activity가 수신하는 마지막 콜백
+  - Activity (또는 activity를 포함하는 프로세스)가 완전히 제거되기 전에 호출
+  - Activity가 갖는 모든 리소스를 해제하도록 구현
+  
+
+
