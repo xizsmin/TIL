@@ -77,7 +77,7 @@
 
 
 ## onPause()  
-### *`onResume()` 다음에만 불림*
+- *`onResume()` 다음에만 불림*
 - Activity가 포커스 잃고 일시정지 상태가 됨 (back, recent 버튼 클릭 등)
 - UI update는 가능 (e.g., 내비게이션 지도 화면 등)
 - 다음 단계: (상황에 따라) `onResume()` 또는 `onStop()`
