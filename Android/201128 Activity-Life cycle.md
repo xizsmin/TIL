@@ -7,3 +7,15 @@
   > - User가 사용을 중단했는데도 발생하는 Resource leak
   > - 다른 app으로 전환할 때 비정상 종료
 
+![activity_lifecycle](https://user-images.githubusercontent.com/57291261/100474367-c560bd80-3123-11eb-98dc-f1dd868e429f.png)
+--------------------------------------------
+
+## Lifecycle Callbacks
+
+### onCreate()
+- 반드시 구현해야 함!
+- 시스템이 Activity를 최초로 생성할 때 호출
+- Activity life 에서 최초로 한 번만, 반드시 실행되어야 할 로직을 작성
+  - `setContentView()`: User interface layout 설정
+  - ViewModel 작성, list에 data binding, 뷰 생성 등
+- `savedInstanceState` 파라미터(`Bundle`객체)를 받음: Activity 이전 저장 상태를 포함
