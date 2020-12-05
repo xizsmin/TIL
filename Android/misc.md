@@ -1,0 +1,1 @@
+- [Fragment] inflater에서 inflate할때 attachToParent: Parent(root) viewgroup의 child로 추가할 것인지
