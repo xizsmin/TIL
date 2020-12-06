@@ -53,6 +53,7 @@
   
   ![service_lifecycle](https://user-images.githubusercontent.com/57291261/101259162-873e4c00-376a-11eb-8e8c-017182d3caba.png)
 
+[그림: 서비스 수명 주기] https://developer.android.com/guide/components/services
   
 ### 시스템에 의한 중단 (LMK)
 - Foreground service는 종료될 가능성 거의 없음
