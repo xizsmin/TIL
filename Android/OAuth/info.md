@@ -7,3 +7,6 @@ Auth Token example
   "expires_in": 299
 }
 ```
+
+
+![OAuth2](https://user-images.githubusercontent.com/57291261/101647523-2a010e00-3a7c-11eb-8e0d-2a2884516892.PNG)
