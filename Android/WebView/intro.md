@@ -21,3 +21,9 @@
     }
     
   ```
+
+## 주요 method
+`sholudOverrideUrlLoading`
+- URL(링크)을 어떻게 처리할지 결정
+- Load하고 싶을 경우 `view.loadUrl(url)` 호출
+- URL 내용에 따라서 load 여부를 결정하기도
