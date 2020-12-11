@@ -36,6 +36,7 @@
 
 ## Protocol stack
 Controller (Physical, Link) + Host (L2CAP, SMP, ATT, GAP, GATT) + App
+
 ### Link Layer
 **Role**
 - Connection 전의 역할:
@@ -45,3 +46,15 @@ Controller (Physical, Link) + Host (L2CAP, SMP, ATT, GAP, GATT) + App
   - Master: 연결 시도, 연결 후 connection 관리
   - Slave: Master의 연결 요청을 받고 timing 규칙을 따름
   
+### GAP (Generic Access Profile)
+- 서로 다른 제조사의 BLE 디바이스들끼리 호환 및 통신 가능하게 하는 프로토콜
+- 디바이스간 인지, data advertise, connection establishment 관련 framework
+
+### GATT (Generic Attribute Profile)
+- BLE data 교환을 관리
+- 데이터 발견 및 R/W 관련한 기초 Data model 및 procedure 정의
+
+## Communication
+- Frequency hopping 규칙 통일, 같은 채널로 signal 교환
+
+
