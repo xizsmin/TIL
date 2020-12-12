@@ -9,6 +9,9 @@
 ### Screen Rotation
 - onPause() -> onStop() -> onDestroy() -> onCreate()(**WITH savedInstanceState**) -> onStart() -> **onRestoreInstanceState()** -> onResume()
 
+### Home button -> 재시작 (일반 launch / Recent->launch)
+- onPause() -> onStop() -> onRestart() -> onStart() -> onResume()
+
 ### Nav: A->B->A
 ![navscenario_A_B_A](https://user-images.githubusercontent.com/57291261/101992522-55436180-3cf7-11eb-964c-683f4256d4c7.PNG)
 
