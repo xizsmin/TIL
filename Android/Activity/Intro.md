@@ -31,11 +31,3 @@
   - category: 보통 DEFAULT
   - data: 허용 data type (text/plain, mime 등)
   
-### Permission 선언  
-
-## Activity Life-cycle
-- 액티비티 상태에 따른 콜백
-
-### onCreate()
-- 시스템이 Activity 생성시 부르는 callback
-- 구현 시 필수요소를 초기화 (생성 초기에 한 번만 해도 되는것)
