@@ -20,5 +20,6 @@
 ### Nav: A->B->A (Translucent or Floating)
 ![navscenario_transparent_or_floating](https://user-images.githubusercontent.com/57291261/101992544-7906a780-3cf7-11eb-92cd-d409d5dd1e5a.PNG)
 - onStop()은 visibility 연관
+  - Lock screen, screen off, home button, 다른 activity로 완전히 cover 등
 - Floating activity의 경우 `android:windowCloseOnTouchOutside`를 `true`설정하여 바깥(A) 터치시 back button으로 이전으로 돌아간 것과 같은 효과를 줄 수 있으나 생명주기는 변화 없음
 - !! 단순 Dialog 띄운다고 onPause()로 내려가지 않음(Activity일 때만!)
