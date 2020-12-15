@@ -9,7 +9,7 @@ Write a program to find the node at which the intersection of two singly linked 
 b1 -> b2 ->b3 
 
 TRICK:
-Iterate over to lists at the same time, as follows:
+Iterate over both lists at the same time, as follows:
 
   a1 a2 c1 c2 c3 b1 b2 b3 c1 c2 c3
   b1 b2 b3 c1 c2 c3 a1 a2 c1 c2 c3
