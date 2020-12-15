@@ -62,4 +62,36 @@
   startActivity(sendIntent)
   ```
   
-  
+## Activity Lifecycle
+### onCreate()
+- 시스템이 Activity 생성시 호출
+- 필수 구성요소 초기화 (최초 1회만 필요한 것, e.g., `setContentView()`)
+- *onCreate() 다음은 항상 onStart()*
+
+### onStart()
+- Activity가 visible한 상태가 됨
+
+### onResume()
+- 사용자 interaction 가능, focus 가져옴 - 주요 기능 구현
+- *Activity stack의 TOP 에 위치*
+
+### onPause()
+- 포커스 잃고 Paused 상태로 전환
+- (부분적으로) visible한 상태 유지, interaction은 불가 (일부만 가리거나 투명 액티비티로 덮일 때 등)
+- UI 업데이트는 계속 가능 (focus 잃어도 영상은 계속 플레이되는 등)
+- **!! 데이터 저장이나 네트워크/DB 작업 수행 등은 여기서 하지 말 것**
+- 다음 상태: onResume() or onStop()
+
+### onStop()
+- **이제 invisible**
+- 다음 상태: onRestart() or onDestroy()
+
+### onDestroy()
+- Activity 제거되기 전
+- back button 등으로 activity 떠나거나, `finish()` 호출 등
+- 관련 리소스 해제 구현
+
+
+
+
+
