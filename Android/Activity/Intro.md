@@ -1,12 +1,22 @@
 # Activity
 ## Concept
+- 앱과 사용자 사이의 진입점 역할을 하는 Android app의 component 중 하나 (나머지: service, broadcast receiver, content provider)
 - Android app의 구성요소 중 하나
 - 앱을 호출할 때, 앱 자체가 아니라 **앱의 액티비티**를 호출하는 것: 앱과 사용자 사이의 진입점 역할
 - 일반적으로는 한 액티비티 == 한 화면 구현, 여러 액티비티가 앱 하나를 구성하는 경우가 많음
   - 그 중 한 액티비티가 launcher 역할: 앱 진입시 올라오는 첫번째 화면
 - UI를 그리는 window 제공: 화면을 채우거나 더 작은 상태로 떠 있을 수 있음.
-- 액티비티 간에는 최소한의 종속성: 다른 앱에 속하는 액티비티를 실행할 수 있음.
-
+  - `android:windowIsFloating`, `android:windowIsTranslucent`
+- 액티비티 간 종속성 높지 않음: 다른 앱에 속하는 액티비티를 실행할 수 있음.
+- 대부분의 앱은 여러 액티비티로 구성 - 이 중 하나가 default activity로 지정
+```xml
+        <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+```
 
 # Activity 사용
 ## manifest 구성
