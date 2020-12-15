@@ -72,6 +72,6 @@
 - RAM 모자라면 시스템에서 프로세스 강제 종료 (LMK)
 - 프로세스 상태에 따라 우선순위 결정: 덜 중요한 프로세스부터 kill
 
-
+![process_lifecycle_and_activity_state](https://user-images.githubusercontent.com/57291261/102221993-31b22e00-3f26-11eb-94a2-33856885d356.PNG)
     
   
