@@ -40,4 +40,26 @@
   - action: 액션 네임(필수)
   - category: 보통 DEFAULT
   - data: 허용 data type (text/plain, mime 등)
+  - manifest에 intent-filter 설정 예시
+  ```xml
+  <activity android:name=".ExampleActivity" android:icon="@drawable/app_icon">
+      <intent-filter>
+          <action android:name="android.intent.action.SEND/>
+          <category android:name="android.intent.category.DEFAULT />
+          <data android:mimeType="text/plain" />
+      </intent-filter>
+  </activity>
+  ```
+
+  - 위와 같은 Activity를 코드상에서 호출하려면
+    - **암시적 호출: 호출할 Activity 이름을 지정하지 않음!**
+  ```kotlin
+  val sendIntent = Intent().apply {
+      action = Intent.ACTION_SEND
+      type = "text/plain"
+      putExtra(Intent.EXTRA_TEXT, textMessage)
+  }
+  startActivity(sendIntent)
+  ```
+  
   
