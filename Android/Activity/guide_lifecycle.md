@@ -74,4 +74,32 @@
 
 ![process_lifecycle_and_activity_state](https://user-images.githubusercontent.com/57291261/102221993-31b22e00-3f26-11eb-94a2-33856885d356.PNG)
     
+- !! 시스템이 특정 Activity를 종료하는 게 아니라 Activity가 실행중인 프로세스를 종료하는 것
+  - 해당 프로세스에서 실행중이었던 다른 작업들이 있다면 같이 소멸
   
+## 임시 UI 상태 저장 및 복원
+- Configuration change (screen rotation, multiwindow 모드로 전환 등)에도 UI 데이터를 손실하지 말아야 할 경우 (가 대부분)
+- 이 상황에서 activity는 일단 destroy된 다음 다시 create됨 (단 이때는 savedInstance != null )
+- `ViewModel`이나 `onSaveInstanceState()` (필요하면 storage 저장) 
+- `onSaveInstanceState()`는 가벼운 UI 데이터에 적용 (primitive나 간단한 객체 등)
+  - serialization cost를 발생시키므로 ViewModel과 같이 사용하는 것을 권장
+  - 수신: `onCreate()`으로 전달된 `savedInstance` 파싱하거나
+  - `onRestoreInstanceState()` 별도 구현해서 파싱(이 때는 `Bundle==null`인지 확인 안 해도 됨)
+  
+### 인스턴스 상태
+- 정상적인 앱 동작이 아니라 시스템에 의해 강제 종료되었을 경우 (config.change, LMK 등)
+- 실제 activity 인스턴스는 사라져도 시스템에 관련 정보가 남아 있음
+- 이 경우 사용자가 Activity로 다시 돌아가려고 시도하면 이 정보를 이용하여 activity instance를 복원
+- **Instance state**: 시스템이 이전 activity 상태를 복원하기 위해 사용하는 `Bundle`에 저장된 데이터
+- `Bundle` 객체는 메인 스레드에서 serialize되어야 하고, 시스템 프로세스 메모리를 사용하므로 **소량의 데이터** 보존에 적합
+- 양 많아지면 `ViewModel`이나, 로컬 스토리지 등 이용
+
+
+## Activity 간 이동
+### Activity에서 다른 Activity 시작하기
+- `startActivity()` or `startActivityForResult()` (결과 수신 필요 여부)
+- 이렇게 시작된 activity가 결과 회신하고 싶으면 `setResult()`
+  - Result code: `RESULT_CANCELED`, `RESULT_OK`, `RESULT_FIRST_USER`
+  
+  
+
