@@ -37,3 +37,41 @@
     ...
   }
 ```  
+- 이 경우는 액티비티에 focus 가져왔을 때만 카메라 초기화 가능
+- focus 없이 보이기만 하는 상태 (e.g., 멀티윈도우에서 안 선택된 상황)에서도 카메라 쓰고 싶으면 `ON_START`로 구현해야
+  - 주의: 다른 앱들과(멀티 윈도우 지원상태 등) 공유해야 하는 시스템 자원은 신중하게 제어
+  
+### onPause()
+- 액티비티 떠나는 첫 번째 신호, foreground에서 내려옴 - interaction 중지
+- Multi window 상에서, 아니면 부분적으로 가려지는 등의 이벤트. 이 상태에서 stop되기 전까지는 visible함
+- 필요에 따라 리소스 해제도 가능하지만 multi window 상태 등에서는 사용자에게 여전히 보일 수 있으므로 `onStop()`에서 해제하는 것도 고려
+- !! 실행시간 짧으므로 오래 걸리는데 확실히 끝내야 되는(중요한) 작업 하지 말 것 (데이터 저장, DB/네트워크 작업 등)
+  - **부하가 큰 종료 작업은 `onStop()`에서**
+- lifecycle-aware: `ON_PAUSE`
+
+### onStop()
+- Activity가 사용자에게 더 이상 표시되지 않음
+- 부분적으로 가리는 정도가 아니고 완전히 안 보임 - 이 때 리소스 해제하거나 조정
+- 부하가 큰 종료작업 실행 (DB에 백업 등)
+- Stop 상태가 되면 activity는 메모리에 저장, Window와는 연결 X
+- start시 이 정보를 다시 호출
+- Stop 상태에서 시스템에 의해 소멸시키더라도 bundle에 있는 view 객체 상태는 유지, 사용자가 activity로 돌아왔을 때 복원
+- lifecycle-aware: `ON_STOP`
+
+### onDestroy()
+- 완전히 activity가 소멸되기전 호출
+  - 사용자가 완전히 activity를 떠나거나, Activity 상에서 `finish()` 호출하여 종료되는 경우
+  - Config 변경 (screen rotation, locale change, multi window 등)으로 일시적 종료 (곧 재생성)
+    - UI 데이터 보존에는 **ViewModel**을 활용해봄
+    - 두 상황은 `isFinishing()`으로 구분 가능: 완전히 종료될 경우는 ViewModel의 `onCleared()`로 완전히 정리
+    
+- `onStop()`에서 정리 못한 리소스 완전히 정리할 것    
+
+
+## Activity 상태 및 메모리에서 제거
+- RAM 모자라면 시스템에서 프로세스 강제 종료 (LMK)
+- 프로세스 상태에 따라 우선순위 결정: 덜 중요한 프로세스부터 kill
+
+
+    
+  
