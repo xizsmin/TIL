@@ -14,7 +14,10 @@
 - `Pager.flow`
   - `Flow<PagingData>` 생성
   - `PagingSource` 생성을 위한 `PagingConfig` 필요
-  - `PagingConfig` 필요
+  - `PagingConfig` :
+    - pageSize(필수 매개변수) : 각 페이지에 로드할 데이터 수를 가리킨다.
+    - enablePlaceholders : Placeholder 사용 여부
+    - maxSize : 기본적으로 모든 페이지를 메모리에 유지한다. 메모리 낭비 등을 해결하기 위해서 설정할 수 있다. 너무 작게 설정하면 부하가 걸림
 
 - `PagingDataAdapter`
   - `PagingData`를 `RecyclerView`로 표현하기 위한 `RecyclerView.Adapter`
