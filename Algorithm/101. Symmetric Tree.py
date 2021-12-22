@@ -15,28 +15,23 @@ Output: true
 #         self.val = val
 #         self.left = left
 #         self.right = right
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
 class Solution:
-    def preorder(self, root):
-        if root is None:
-            return []
-        
-        ret = []
-        ret.extend(self.preorder(root.left))
-        ret.append(root.val)
-        ret.extend(self.preorder(root.right))
-        
-        return ret
-        
-    def symmetric_preorder(self, root):
-        if root is None:
-            return []
-        
-        ret = []
-        ret.extend(self.symmetric_preorder(root.right))
-        ret.append(root.val)
-        ret.extend(self.symmetric_preorder(root.left))
 
-        return ret
+    def f(self, rootA, rootB):
+        if rootA == None and rootB == None:
+            return True
+        
+        if rootA != None and rootB != None:
+            if rootA.val == rootB.val:
+                return self.f(rootA.left, rootB.right) and self.f(rootA.right, rootB.left)
+        return False
+    
     
     def isSymmetric(self, root: Optional[TreeNode]) -> bool:
         if root is None:
@@ -48,12 +43,6 @@ class Solution:
         if root.left is None and root.right is None:
             return True
         
-        a = self.preorder(root)
-        
-        b = self.symmetric_preorder(root)
-        print(a)
-        print(b)
-        
-        return (self.preorder(root) == self.symmetric_preorder(root))
-      
-      
+        return self.f(root.left, root.right)
+    
+    
