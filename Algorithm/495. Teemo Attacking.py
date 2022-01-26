@@ -27,3 +27,18 @@ Explanation: Teemo's attacks on Ashe go as follows:
 Ashe is poisoned for seconds 1, 2, and 3, which is 3 seconds in total.
  
 """
+
+class Solution:
+    def findPoisonedDuration(self, timeSeries: List[int], duration: int) -> int:
+        
+        prev = 0
+        ret = 0
+        for t in timeSeries:
+            if t < prev:
+                ret = ret - (prev - t)
+            ret = ret + duration
+            prev = t + duration
+            
+        return ret
+       
+       
