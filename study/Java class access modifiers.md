@@ -1,0 +1,4 @@
+- `public`: the class may be accessed by any class
+- `protected`: may be accessed by subclass
+- `private`: may be accessed by the class itself
+- no modifier: may be accessed by **classes from the same package**
