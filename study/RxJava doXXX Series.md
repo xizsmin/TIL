@@ -1,0 +1,1 @@
+- RxJava는 콜백을 붙일 때, 해당 콜백 이후의 dispose success/fail은 감지할 수 없음 (callback 호출 순서를 무시하고 dispose 감지할 수 없음)
