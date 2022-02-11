@@ -15,7 +15,7 @@
 
 ## Router
 - RIB 간의 연결 담당
-- Interactor에서 어떤 child RIB이 붙을지 /떨어질지 결정되면 라우터가 실제로 수행
+- `Interactor`에서 어떤 child RIB이 붙을지 /떨어질지 결정되면 라우터가 실제로 수행
 - Child RIB의 builder를 가지고 있다
 
 ## Builder
@@ -33,8 +33,8 @@
 - 아래 -> 위 방향으로: listener
 
 ## Workflow
-- Generic class로 정의되어 있음, parameter type으로 ActionableItem 
-  - ActionableItem: RIB 트리에서 path를 이루는 각 `Step`에서 할 일과 로직을 정의
+- Generic class로 정의되어 있음, parameter type으로 `ActionableItem`
+  - `ActionableItem`: RIB 트리에서 path를 이루는 각 `Step`에서 할 일과 로직을 정의
   - Workflow를 이루는 각 `Step` (각 RIB의 Interactor) 는 이 ActionableItem에 정의된 프로토콜을 따라야 함
 - Custom url scheme 처리 지원
 - RIB 트리에서 실행 가능한 특정 path의 일련의 `Step`들 (root ~ <path> ~ 기대하는 상태까지)을 정의
