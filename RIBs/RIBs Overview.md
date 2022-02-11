@@ -32,3 +32,13 @@
 - 위 -> 아래 방향으로: Rx stream을 DI하거나 build method 에 parameter로 전달
 - 아래 -> 위 방향으로: listener
 
+## Workflow
+- Generic class로 정의되어 있음, parameter type으로 ActionableItem 
+  - ActionableItem: RIB 트리에서 path를 이루는 각 `Step`에서 할 일과 로직을 정의
+  - Workflow를 이루는 각 `Step` (각 RIB의 Interactor) 는 이 ActionableItem에 정의된 프로토콜을 따라야 함
+- Custom url scheme 처리 지원
+- RIB 트리에서 실행 가능한 특정 path의 일련의 `Step`들 (root ~ <path> ~ 기대하는 상태까지)을 정의
+  
+https://play-tv.kakao.com/embed/player/cliplink/414004680?popup=1&autoplay=1
+  
+  
